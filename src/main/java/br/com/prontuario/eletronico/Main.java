@@ -12,14 +12,16 @@ public class Main {
         ProntuarioController controller = new ProntuarioController();
         Arquivo arquivo = new Arquivo(controller);
         boolean sair = false;
-     
+        
+        //Exibe um menu interativo em loop até o usuário sair.
         while(!sair){
             System.out.println("-----------MENU-----------\n1 - Cadastrar\n2 - Consultar por codigo\n3 - Consultar por nome\n4 - Atualizar\n5 - Excluir\n6 - Listagem completa\n7 - Exportar relatórios\n8 - Sair\n--------------------------");
             int opcao = sc.nextInt();
             sc.nextLine();
             
+            //Direciona para a opção selecionada.
             switch(opcao){
-                case 1: 
+                case 1: //Fluxo de dados para cadastrar novo paciente.
                     System.out.println("Insira os dados do paciente:");
                     
                     System.out.print("Nome: ");
@@ -57,7 +59,7 @@ public class Main {
                     System.out.println("Paciente cadastrado com sucesso!");
                     
                     break;
-                case 2:
+                case 2: //Buscar paciente por código de registro.
                     System.out.print("Insira o código do paciente que deseja consultar: ");
                     int codigoBusca = sc.nextInt();
                     sc.nextLine();
@@ -68,7 +70,7 @@ public class Main {
                     }
                     System.out.println(controller.buscarPorCodigo(codigoBusca));
                     break;
-                case 3:
+                case 3: // Realiza a busca de um paciente pelo nome. Verifica se está cadastrado e exibe os dados.
                     System.out.print("Insira o nome do paciente que deseja consultar: ");
                     String nomeBusca = sc.nextLine();
                     while(!controller.getHashMap().containsValue(nomeBusca)){
@@ -77,7 +79,7 @@ public class Main {
                     }
                     System.out.println(controller.buscarPorNome(nomeBusca));
                     break;
-                case 4:
+                case 4: //Altera dados de um paciente.
                     System.out.print("Insira o codigo do paciente que deseja alterar: ");
                     int codigoAtualizar = sc.nextInt();
                     sc.nextLine();
@@ -123,7 +125,8 @@ public class Main {
                     }
          
                     break;
-                case 5: 
+                    
+                case 5: // Realiza a exclusão de um paciente. Solicita o código, verifica se existe e confirma a exclusão.
                     System.out.println("Insira o código do paciente que deseja excluir:");
                     int codigoExcluir = sc.nextInt();
                     sc.nextLine();
@@ -140,19 +143,20 @@ public class Main {
                     }
                    
                     break;
-                case 6:
+                case 6: //Lista todos os pacientes.
                     controller.relatorioPacientes();
                     break;
-                case 7:
+                case 7: //Opção de expostação de dados.
                     System.out.println("Digite 1 para exportar dados de um paciente ou digite 2 para exportar dados de todos os pacientes");
                     int op = sc.nextInt();
                     sc.nextLine();
                     
-                    if(op == 1){
+                    if(op == 1){ //Exportação individual.
                         System.out.println("Insira o codigo do paciente:");
                         int pacienteCodigo = sc.nextInt();
                         sc.nextLine();
                         
+                        // Verifica existência do paciente e gera o arquivo.
                         if(controller.getHashMap().containsKey(pacienteCodigo)){
                             HashMap<Integer, Paciente> pacientesPorCodigo = controller.getHashMap();
                             Paciente pacienteEncontrado = pacientesPorCodigo.get(pacienteCodigo);
@@ -161,7 +165,7 @@ public class Main {
                         }else{
                             System.out.println("Paciente não encontrado");
                         }
-                    }else if(op == 2){
+                    }else if(op == 2){ //Exportação de todos os registros dos pacientes, ou avisa sobre opção inválida.
                         arquivo.exportarParaTxtPacientes();
                         System.out.println("Dados exportado com sucesso!");
                     }else{
@@ -169,10 +173,11 @@ public class Main {
                     }
                     
                     break;
-                case 8:
+                case 8: //Sair do menu.
                     sair = true;
                     break;     
-                default:
+               
+                default: //Executa quando o usuário digita uma opção inválida.
                     System.out.println("Opção inválida");
                     break;
             }   
