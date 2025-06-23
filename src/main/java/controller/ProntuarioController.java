@@ -4,10 +4,10 @@ import java.util.HashMap;
 import model.Paciente;
 import util.Arquivo;
 
-public class ProntuarioController { //Classe responsável por gerenciar todas as operações do prontuário eletrônico.
-    private HashMap<Integer,Paciente> pacientesPorCodigo = new HashMap<>();
-    private ArrayList<Paciente> listaDePacientes = new ArrayList<>();
-    private Arquivo arquivo;
+public class ProntuarioController { 
+    private HashMap<Integer,Paciente> pacientesPorCodigo = new HashMap<>(); //Armazena pacientes por código.
+    private ArrayList<Paciente> listaDePacientes = new ArrayList<>(); //Armazena todos os pacientes para listagem e busca por nome.
+    private Arquivo arquivo; //Responsável pela leitura e gravação em arquivos.
     
     //Construtor que inicializa o objeto para ler e salvar arquivos.
     public ProntuarioController(){
