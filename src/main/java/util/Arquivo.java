@@ -8,14 +8,15 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import controller.ProntuarioController;
 
+//Classe reponsável por salvar e carregar os dados do sistema em arquivos.
 public class Arquivo {
     private String path = "/C:/Users/Letic/OneDrive/Documentos/NetBeansProjects/prontuario-eletronico/arquivos/arquivo.txt"; //escolher um caminho de arquivo no seu computador
     private ProntuarioController controller; 
     
-    public Arquivo(ProntuarioController controller){
+    public Arquivo(ProntuarioController controller){ //Cria o gerenciador de arquivos e recebe o controlador do sistema.
         this.controller = controller; 
     }
-    
+    //Salva um paciente em arquivo binário.
     public boolean salvarArquivoPaciente(Paciente p){
         try{
             FileOutputStream arquivoPaciente = new FileOutputStream(path);
