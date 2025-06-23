@@ -16,14 +16,15 @@ public class Arquivo {
     public Arquivo(ProntuarioController controller){ //Cria o gerenciador de arquivos e recebe o controlador do sistema.
         this.controller = controller; 
     }
-    //Salva um paciente em arquivo binário.
+    //Salva um paciente em arquivo binário e textuais.
+    //Retorna true se salvar com sucesso, false se ocorrer erro.
     public boolean salvarArquivoPaciente(Paciente p){
         try{
             FileOutputStream arquivoPaciente = new FileOutputStream(path);
             ObjectOutputStream objGravar = new ObjectOutputStream(arquivoPaciente);
-            objGravar.writeObject(p);
-            objGravar.flush();
-            objGravar.close();
+            objGravar.writeObject(p); // Salva o objeto paciente no arquivo.
+            objGravar.flush();// Garante que todos os dados sejam gravados.
+            objGravar.close();//Fecha os recursos.
             arquivoPaciente.flush();
             arquivoPaciente.close();
             
@@ -33,7 +34,7 @@ public class Arquivo {
             return false;
         }  
     }
-    
+     //Carrega e exibe um paciente individual salvo em arquivo binário.
     public void carregarArquivoPaciente(){
         try{
             FileInputStream arquivoLeitura = new FileInputStream(path);
@@ -45,7 +46,7 @@ public class Arquivo {
             e.printStackTrace();
         }
     }
-    
+    //Exporta os dados de um paciente individual para um arquivo de texto.
     public boolean exportarParaTxtPaciente(Paciente p){
         try{
             PrintWriter fileOutput = new PrintWriter("pacientes.txt");
@@ -56,13 +57,13 @@ public class Arquivo {
             fileOutput.flush();
             fileOutput.close();
             
-            return true;
+            return true; 
         }catch(Exception e){
             e.printStackTrace();
-            return false;
+            return false; 
         }
     }
-    
+     //Salva toda a lista de pacientes em um arquivo binário.
     public boolean salvarArquivoPacientes(){
         try{
             FileOutputStream arquivoPacientes = new FileOutputStream(path);
@@ -81,7 +82,7 @@ public class Arquivo {
             return false;
         }  
     }
-    
+     //Carrega e exibe todos os pacientes salvos no arquivo binário.
     public void carregarArquivoPacientes(){
         try{
             FileInputStream arquivoLeitura = new FileInputStream(path);
@@ -99,7 +100,7 @@ public class Arquivo {
             e.printStackTrace();
         }
     }
-    
+      // Exporta todos os pacientes para um arquivo de texto no formato de tabela.
     public boolean exportarParaTxtPacientes(){
         
         try{
