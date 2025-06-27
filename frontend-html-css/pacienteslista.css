@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #e5e5e5;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  width: 100px;
+  background-color: #e5e5e5;
+  padding: 20px 10px;
+  text-align: center;
+  color: #1f2a44;
+}
+
+.logo {
+  width: 40px;
+  margin-bottom: 10px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  position: relative;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+
+.lista-container {
+  background-color: #c1d0ed;
+  padding: 20px;
+  border-radius: 20px;
+  width: 400px;
+  margin: 0 auto;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.lista-pacientes {
+  list-style: none;
+}
+
+.lista-pacientes li {
+  background-color: white;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: black;
+}
+
+.voltar {
+  position: absolute;
+  top: 45%;
+  left: 80px;
+  transform: translateY(-50%);
+}
+
+.botao-voltar {
+  width: 50px;
+  height: 50px;
+  background-color: #1f2a44;
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#logo {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+}
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.search-box input {
+  padding: 10px 15px;
+  width: 320px;
+  border: none;
+  border-radius: 20px;
+  background-color: white;
+  font-size: 14px;
+  color: #aaa;
+  padding-left: 40px; /* espaço para o ícone */
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: calc(50% - 160px + 12px); /* ícone centralizado dentro do input */
+}
