@@ -1,4 +1,4 @@
-package com.integracao.prontuarioeletronico.br.com.prontuario.eletronico;
+package com.integracao.prontuarioeletronico.br.com.prontuario.eletronico; 
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -24,14 +24,14 @@ public class Main {
             switch(opcao){
                 case 1: //Fluxo de dados para cadastrar novo paciente.
                     System.out.println("Insira os dados do paciente:");
-                    
+                    //Lê e valida o nome
                     System.out.print("Nome: ");
                     String nomePaciente = sc.nextLine();
                     while(!Validador.nomeValido(nomePaciente)){
                         System.out.println("Não é permitido números e caracteres especiais. Insira um nome: ");
                         nomePaciente = sc.nextLine();
                     }
-                    
+                    //Lê e valida a idade
                     System.out.print("Idade: ");
                     int idadePaciente = sc.nextInt();
                     sc.nextLine();
@@ -40,21 +40,21 @@ public class Main {
                         idadePaciente = sc.nextInt();
                         sc.nextLine();
                     }
-                    
+                    //Lê e valida o CPF
                     System.out.print("CPF: ");
                     String cpfPaciente = sc.nextLine();
-                    while(!Validador.cpfValido(cpfPaciente)){
+                    while(!Validador.cpfValido(cpfPaciente)){ 
                         System.out.println("Insira 11 números para o formato do CPF XXX.XXX.XXX-XX:");
                         cpfPaciente = sc.nextLine();
                     }
-                    
+                    //Lê o diagnóstico
                     System.out.print("Diagnostico: ");
                     String diagnosticoPaciente = sc.nextLine();
                     while(diagnosticoPaciente.isEmpty()){
                         System.out.print("Preencha o campo: ");
                         diagnosticoPaciente = sc.nextLine();
                     }
-                    
+                      //Cria o objeto Paciente e o adiciona ao sistema
                     Paciente p = new Paciente(nomePaciente, idadePaciente, cpfPaciente, diagnosticoPaciente);
                     controller.cadastrarPaciente(p);
                     System.out.println("Paciente cadastrado com sucesso!");
@@ -85,17 +85,17 @@ public class Main {
                     int codigoAtualizar = sc.nextInt();
                     sc.nextLine();
                     
-                    if(controller.getHashMap().containsKey(codigoAtualizar)){
+                    if(controller.getHashMap().containsKey(codigoAtualizar)){ //Verifica se o paciente existe
                         System.out.println("Insira os novos dados do paciente:");
                     
-                        System.out.println("Nome: ");
+                        System.out.println("Nome: "); //Nome atualizado
                         String nomeAtualizado = sc.nextLine();
                         while(!Validador.nomeValido(nomeAtualizado)){
                             System.out.println("Não é permitido números e caracteres especiais. Insira um nome: ");
                             nomeAtualizado = sc.nextLine();
                         }
                         
-                        System.out.println("Idade: ");
+                        System.out.println("Idade: "); //Idade atualizada
                         int idadeAtualizada = sc.nextInt();
                         sc.nextLine();
                         while(!Validador.idadeValida(idadeAtualizada)){
@@ -103,21 +103,21 @@ public class Main {
                             idadeAtualizada = sc.nextInt();
                             sc.nextLine();
                         }
-                        
+                        // CPF atualizado
                         System.out.println("CPF: ");
                         String cpfAtualizado = sc.nextLine();
                             while(!Validador.cpfValido(cpfAtualizado)){
                             System.out.println("Insira 11 números para o formato do CPF XXX.XXX.XXX-XX:");
                             cpfAtualizado = sc.nextLine();
                         }
-                        
+                        // Diagnóstico atualizado
                         System.out.println("Diagnostico: ");
                         String diagnosticoAtualizado = sc.nextLine();
-                        while(diagnosticoAtualizado.isEmpty()){
+                        while(diagnosticoAtualizado.isEmpty()){ 
                             System.out.print("Preencha o campo: ");
                             diagnosticoAtualizado = sc.nextLine();
                         }
-
+                          // Atualiza os dados do paciente
                         Paciente pAtualizado = new Paciente(nomeAtualizado, idadeAtualizada, cpfAtualizado, diagnosticoAtualizado);
                         controller.atualizarPaciente(codigoAtualizar, pAtualizado);
                         System.out.println("Paciente atualizado com sucesso!");
@@ -131,7 +131,7 @@ public class Main {
                     System.out.println("Insira o código do paciente que deseja excluir:");
                     int codigoExcluir = sc.nextInt();
                     sc.nextLine();
-                    while(!controller.getHashMap().containsKey(codigoExcluir)){
+                    while(!controller.getHashMap().containsKey(codigoExcluir)){ 
                         System.out.println("Paciente não encontrado. Insira outro código: ");
                         codigoExcluir = sc.nextInt();
                         sc.nextLine();
