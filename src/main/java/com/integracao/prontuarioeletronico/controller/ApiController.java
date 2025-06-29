@@ -36,20 +36,20 @@ public class ApiController { //Controlador REST com endpoints da API
     public ResponseEntity<List<Paciente>> listarTodosPacientes() {
         return ResponseEntity.ok(prontuarioController.getArrayList());
     }
-
-    @PostMapping
+       //Cadastra um novo paciente após validar os dados
+    @PostMapping 
     public ResponseEntity<String> cadastrarPaciente(@RequestBody Paciente paciente) {
-        if (!Validador.nomeValido(paciente.getNome())) {
+        if (!Validador.nomeValido(paciente.getNome())) { // Valida o nome do paciente
             return ResponseEntity.badRequest().body("Nome inválido.");
         }
-        if (!Validador.idadeValida(paciente.getIdade())) {
+        if (!Validador.idadeValida(paciente.getIdade())) { // Valida a idade
             return ResponseEntity.badRequest().body("Idade inválida.");
         }
-        if (!Validador.cpfValido(paciente.getCpf())) {
+        if (!Validador.cpfValido(paciente.getCpf())) { // Valida o CPF
             return ResponseEntity.badRequest().body("CPF inválido.");
         }
 
-        prontuarioController.cadastrarPaciente(paciente);
+        prontuarioController.cadastrarPaciente(paciente); // Se passou por todas as validações, cadastra o paciente
         return ResponseEntity.status(HttpStatus.CREATED).body("Paciente cadastrado com sucesso!");
     }
         //Procura um paciente pelo código
@@ -84,7 +84,7 @@ public class ApiController { //Controlador REST com endpoints da API
         if (!Validador.cpfValido(paciente.getCpf())) {
             return ResponseEntity.badRequest().body("CPF inválido.");
         }
-
+          // Define o código do paciente com base no valor recebido na URL
         paciente.setCodigo(codigo); 
         prontuarioController.atualizarPaciente(codigo, paciente);
         return ResponseEntity.ok("Paciente atualizado com sucesso!");
@@ -103,11 +103,11 @@ public class ApiController { //Controlador REST com endpoints da API
 
         sb.append("ID    | Nome                 | Idade | CPF           | Diagnóstico\n");
         sb.append("---------------------------------------------------------------\n");
-        for (Paciente p : pacientes) {
+        for (Paciente p : pacientes) { 
             sb.append(String.format("%-5d | %-20s | %-5d | %-13s | %s\n",
                     p.getCodigo(), p.getNome(), p.getIdade(), p.getCpf(), p.getDiagnostico()));
         }
-
+             // Envia o conteúdo do relatório como resposta da requisição
         return ResponseEntity.ok(sb.toString());
     }
         //Gera um arquivo .txt com os dados do paciente e envia como download
