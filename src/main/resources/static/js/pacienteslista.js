@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("pacienteSelecionado", JSON.stringify(paciente));
         window.location.href = "../html/informpaciente.html";
       });
-      lista.appendChild(li); // nsere o paciente na lista
+      lista.appendChild(li); // Insere o paciente na lista
     });
   }
  //Filtra a lista conforme o usuário digita no campo de busca
