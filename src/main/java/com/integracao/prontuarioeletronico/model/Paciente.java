@@ -21,16 +21,29 @@ public class Paciente implements Serializable {
     }
      //Cria um paciente com valores vazios, para preencher depois.
     public Paciente(){
-        this.codigo = proximoCodigo++;
         this.nome = "Desconhecido";
         this.idade = 0;
         this.cpf = "00000000000";
         this.diagnostico = "Não informado";
     }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
     //Retorna o código do paciente.
     public int getCodigo() {
         return codigo;
     }
+
+    public static int getProximoCodigo() {
+        return proximoCodigo;
+    }
+
+    public static void incrementarCodigo() {
+        proximoCodigo++;
+    }
+
     //Atualiza o nome do paciente.
     public void setNome(String nome) {
         this.nome = nome;

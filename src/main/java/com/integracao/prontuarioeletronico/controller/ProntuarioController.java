@@ -14,16 +14,18 @@ public class ProntuarioController {
     public ProntuarioController(){
         this.arquivo = new Arquivo(this);
     }
-    /**
-     * Cadastra um paciente no sistema.
-     * Salva tanto na lista quanto no HashMap para garantir
-     * que ele seja encontrado tanto por nome quanto por código.
-     */
-    public void cadastrarPaciente(Paciente p){
-        int codigo = p.getCodigo();
+    
+    public void cadastrarPaciente(Paciente p) {
+        // Gera código automaticamente aqui
+        int codigo = Paciente.getProximoCodigo();
+        p.setCodigo(codigo);
+        Paciente.incrementarCodigo();
+
         pacientesPorCodigo.put(codigo, p);
         listaDePacientes.add(p);
     }
+
+
     //Busca paciente por código.
     public Paciente buscarPorCodigo(int codigo){
         return pacientesPorCodigo.get(codigo);
@@ -57,6 +59,7 @@ public class ProntuarioController {
     }
       //Exclui um paciente do sistema, removendo dos dois armazenamentos HashMap e lista.
     public void ExcluirPaciente(int codigo){
+        pacientesPorCodigo.remove(codigo);
         listaDePacientes.removeIf(p -> p.getCodigo() == codigo);
     }
      //Gera relatório completo do paciente.

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.integracao.prontuarioeletronico.model.Paciente;
 import com.integracao.prontuarioeletronico.util.Arquivo;
+import com.integracao.prontuarioeletronico.util.Validador;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -36,8 +37,18 @@ public class ApiController { //Controlador REST com endpoints da API
         return ResponseEntity.ok(prontuarioController.getArrayList());
     }
 
-    @PostMapping //recebe os dados de um novo paciente e salva no sistema.
+    @PostMapping
     public ResponseEntity<String> cadastrarPaciente(@RequestBody Paciente paciente) {
+        if (!Validador.nomeValido(paciente.getNome())) {
+            return ResponseEntity.badRequest().body("Nome inválido.");
+        }
+        if (!Validador.idadeValida(paciente.getIdade())) {
+            return ResponseEntity.badRequest().body("Idade inválida.");
+        }
+        if (!Validador.cpfValido(paciente.getCpf())) {
+            return ResponseEntity.badRequest().body("CPF inválido.");
+        }
+
         prontuarioController.cadastrarPaciente(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body("Paciente cadastrado com sucesso!");
     }
@@ -61,9 +72,20 @@ public class ApiController { //Controlador REST com endpoints da API
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-         //Tualiza os dados de um paciente já cadastrado, com base no código.
-    @PutMapping("/{codigo}")
+         //Atualiza os dados de um paciente já cadastrado, com base no código.
+   @PutMapping("/{codigo}")
     public ResponseEntity<String> atualizarPaciente(@PathVariable int codigo, @RequestBody Paciente paciente) {
+        if (!Validador.nomeValido(paciente.getNome())) {
+            return ResponseEntity.badRequest().body("Nome inválido.");
+        }
+        if (!Validador.idadeValida(paciente.getIdade())) {
+            return ResponseEntity.badRequest().body("Idade inválida.");
+        }
+        if (!Validador.cpfValido(paciente.getCpf())) {
+            return ResponseEntity.badRequest().body("CPF inválido.");
+        }
+
+        paciente.setCodigo(codigo); 
         prontuarioController.atualizarPaciente(codigo, paciente);
         return ResponseEntity.ok("Paciente atualizado com sucesso!");
     }

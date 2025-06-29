@@ -11,7 +11,7 @@ import com.integracao.prontuarioeletronico.model.Paciente;
 
 //Classe reponsável por salvar e carregar os dados do sistema em arquivos.
 public class Arquivo {
-    private String path = "/C:/Users/Letic/OneDrive/Documentos/NetBeansProjects/prontuario-eletronico/arquivos/arquivo.txt"; //escolher um caminho de arquivo no seu computador
+    private String path = "/C:/Users/Letic/OneDrive/Documentos/NetBeansProjects/prontuario-eletronico/arquivos/arquivo.txt"; 
     private ProntuarioController controller; 
     
     public Arquivo(ProntuarioController controller){ //Cria o gerenciador de arquivos e recebe o controlador do sistema.

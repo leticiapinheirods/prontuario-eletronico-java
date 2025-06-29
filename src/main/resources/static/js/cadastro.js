@@ -13,10 +13,9 @@ document.addEventListener("DOMContentLoaded", () => { // Aguarda o carregamento 
     const cpf = document.getElementById("cpf").value.trim();
     const diagnostico = document.querySelector("textarea[name='diagnostico']").value.trim();
     
-   // Verifica se os dados são válidos
-    if (!nome || isNaN(idade) || idade <= 0 || idade >= 110 || !cpf.match(/^\d{11}$/) || !diagnostico) {
-      alert("Por favor, preencha todos os campos corretamente.");
-      return; // Interrompe o envio se houver erro
+    if (!nome || !cpf || !diagnostico || isNaN(idade)) {
+      alert("Todos os campos são obrigatórios.");
+      return;
     }
        // Cria um objeto com os dados preenchidos
     const paciente = { nome, idade, cpf, diagnostico };
