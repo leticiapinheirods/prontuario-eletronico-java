@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput"); // Seleciona o campo de busca
 
   let pacientes = []; //Array para guardar os pacientes carregados
-
-  async function carregarPacientes() {  //Função que carrega os pacientes da API
+  
+ //Função que carrega os pacientes da API
+  async function carregarPacientes() {  
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API_URL); // Faz uma requisição GET para a API
       if (response.ok) {
         pacientes = await response.json(); //Converte os dados recebidos em JSON
         renderizarLista(pacientes);// Mostra a lista completa na tela
@@ -21,11 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 // Função que mostra a lista de pacientes no HTML
   function renderizarLista(listaPacientes) {
-    lista.innerHTML = "";// Limpa a lista atual
-    listaPacientes.forEach(paciente => { // Para cada paciente cria um item na lista
-      const li = document.createElement("li");
+    lista.innerHTML = "";
+    listaPacientes.forEach(paciente => { // Percorre todos os pacientes recebidos
+      const li = document.createElement("li"); // Cria um item de lista
       li.textContent = `${paciente.codigo} - ${paciente.nome}`;
-      li.classList.add("item-paciente");
+      li.classList.add("item-paciente"); 
       li.addEventListener("click", () => { //Quando clicar no paciente, salva no localStorage e vai para a página de detalhes
         localStorage.setItem("pacienteSelecionado", JSON.stringify(paciente));
         window.location.href = "../html/informpaciente.html";
