@@ -1,0 +1,30 @@
+<!-- pacienteslista.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pacientes - Med Center</title>
+  <link rel="stylesheet" href="../css/pacienteslista.css">
+</head>
+<body>
+  <img src="logo hospital.png" alt="logo" id="logo" onclick="window.location.href='../html/menu.html'" style="cursor: pointer;">
+  <div class="container">
+    <main class="main-content">
+      <h1 class="titulo">PACIENTES</h1>
+      <div class="search-box">
+        <img src="iris_6496610.png" alt="Ícone de busca" class="search-icon">
+        <input type="text" id="searchInput" placeholder="Digite o código ou nome do paciente">
+      </div>
+      <div class="lista-container">
+        <ul class="lista-pacientes" id="listaPacientes">
+          <!-- Pacientes serão inseridos dinamicamente aqui -->
+        </ul>
+      </div>
+    </main>
+    <div class="voltar" onclick="window.location.href='../html/menu.html'">
+      <div class="botao-voltar">&larr;</div>
+    </div>
+  </div>
+  <script src="../js/pacienteslista.js"></script>
+</body>
+</html>

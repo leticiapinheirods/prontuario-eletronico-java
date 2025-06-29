@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Identificação de Paciente</title>
+  <link rel="stylesheet" href="../css/alterarinform.css">
+  
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar" onclick="window.location.href='../html/listadepacientes.html'">
+      <div class="back-button">
+        ←
+      </div>
+      <div class="label">
+      </div>
+    </div>
+    <img src="logo hospital.png" alt="logo hospital" id="logo" onclick="window.location.href='../html/menu.html'" style="cursor: pointer;">
+    <div class="form-wrapper">
+    <h1 class="titulo-formulario">IDENTIFICAÇÃO DO PACIENTE</h1>
+    <div class="form-section">
+
+      <div class="botoes-top">
+    <button class="botao-icone" title="Baixar">
+      <img src="baixar.png" alt="Baixar" class="icone-acao">
+    </button>
+    <button class="botao-icone" title="Excluir" onclick="window.location.href='../html/consultarexcluir.html'">
+      <img src="lixeira.png" alt="Excluir" class="icone-acao">
+    </button>
+    <button class="botao-icone" title="Editar" onclick="window.location.href='../html/alterarinform.html'">
+      <img src="editar.png" alt="Editar" class="icone-acao">
+    </button>
+      </div>
+        
+      <form>
+        <div class="form-group">
+        <label for="nome">NOME:</label>
+        </div>
+
+        <div class="form-group">
+        <label for="idade">IDADE:</label>
+        </div>
+        
+        <div class="form-group">
+        <label for="cpf">CPF:</label>
+        </div>
+
+        <div class="form-group diagnostico">
+        <label for="diagnostico">DIAGNÓSTICO:</label>
+        </div>
+      
+
+       
+     
+      </form>
+    </div>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const paciente = JSON.parse(localStorage.getItem("pacienteSelecionado"));
+
+    if (paciente) {
+      const form = document.querySelector("form");
+
+      form.innerHTML = `
+        <div class="form-group"><label>NOME:</label><p>${paciente.nome}</p></div>
+        <div class="form-group"><label>IDADE:</label><p>${paciente.idade}</p></div>
+        <div class="form-group"><label>CPF:</label><p>${paciente.cpf}</p></div>
+        <div class="form-group diagnostico"><label>DIAGNÓSTICO:</label><p>${paciente.diagnostico}</p></div>
+      `;
+    }
+  });
+</script>
+<script src="../js/baixarpaciente.js"></script>
+<script src="../js/editarpaciente.js"></script>
+</body>
+</html>
+        
+    
