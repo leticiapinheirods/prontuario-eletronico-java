@@ -26,7 +26,7 @@ public class Paciente implements Serializable {
         this.cpf = "00000000000";
         this.diagnostico = "Não informado";
     }
-
+       // Define o código do paciente
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
@@ -35,11 +35,11 @@ public class Paciente implements Serializable {
     public int getCodigo() {
         return codigo;
     }
-
+     // Retorna o próximo código a ser atribuído
     public static int getProximoCodigo() {
         return proximoCodigo;
     }
-
+      // Incrementa o valor do próximo código
     public static void incrementarCodigo() {
         proximoCodigo++;
     }
