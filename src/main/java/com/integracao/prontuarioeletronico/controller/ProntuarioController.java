@@ -14,13 +14,13 @@ public class ProntuarioController {
     public ProntuarioController(){
         this.arquivo = new Arquivo(this);
     }
-    
+     // Cadastra um novo paciente no sistema
     public void cadastrarPaciente(Paciente p) {
-        // Gera código automaticamente aqui
-        int codigo = Paciente.getProximoCodigo();
+        
+        int codigo = Paciente.getProximoCodigo(); // Gera código automaticamente 
         p.setCodigo(codigo);
         Paciente.incrementarCodigo();
-
+        // Armazena o paciente no HashMap e na lista
         pacientesPorCodigo.put(codigo, p);
         listaDePacientes.add(p);
     }
