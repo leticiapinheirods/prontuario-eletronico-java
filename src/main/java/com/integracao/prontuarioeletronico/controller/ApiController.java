@@ -27,31 +27,31 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-public class ApiController {
+public class ApiController { //Controlador REST com endpoints da API
 
     private final ProntuarioController prontuarioController = new ProntuarioController();
 
-    @GetMapping
+    @GetMapping //Lista todos os pacientes cadastrados no sistema
     public ResponseEntity<List<Paciente>> listarTodosPacientes() {
         return ResponseEntity.ok(prontuarioController.getArrayList());
     }
 
-    @PostMapping
+    @PostMapping //recebe os dados de um novo paciente e salva no sistema.
     public ResponseEntity<String> cadastrarPaciente(@RequestBody Paciente paciente) {
         prontuarioController.cadastrarPaciente(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body("Paciente cadastrado com sucesso!");
     }
-
+        //Procura um paciente pelo código
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<Paciente> buscarPorCodigo(@PathVariable int codigo) {
         Paciente paciente = prontuarioController.buscarPorCodigo(codigo);
         if (paciente != null) {
-            return ResponseEntity.ok(paciente);
-        } else {
+            return ResponseEntity.ok(paciente); //se achou, retorna o paciente
+        } else { //se não achou, retorna erro
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+        //procura um paciente usando o nome
     @GetMapping("/nome/{nome}")
     public ResponseEntity<Paciente> buscarPorNome(@PathVariable String nome) {
         Paciente paciente = prontuarioController.buscarPorNome(nome);
@@ -61,19 +61,19 @@ public class ApiController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+         //Tualiza os dados de um paciente já cadastrado, com base no código.
     @PutMapping("/{codigo}")
     public ResponseEntity<String> atualizarPaciente(@PathVariable int codigo, @RequestBody Paciente paciente) {
         prontuarioController.atualizarPaciente(codigo, paciente);
         return ResponseEntity.ok("Paciente atualizado com sucesso!");
     }
-
+         //Remove o paciente com o código indicado.
     @DeleteMapping("/{codigo}")
     public ResponseEntity<String> excluirPaciente(@PathVariable int codigo) {
         prontuarioController.ExcluirPaciente(codigo);
         return ResponseEntity.ok("Paciente excluído com sucesso!");
     }
-
+         //Gera um relatório de todos os pacientes
     @GetMapping("/relatorio")
     public ResponseEntity<String> gerarRelatorio() {
         List<Paciente> pacientes = prontuarioController.getArrayList();
@@ -88,36 +88,37 @@ public class ApiController {
 
         return ResponseEntity.ok(sb.toString());
     }
-
+        //Gera um arquivo .txt com os dados do paciente e envia como download
    @GetMapping("/baixar/{codigo}")
     public ResponseEntity<Void> baixarPaciente(@PathVariable int codigo, HttpServletResponse response) {
         Paciente paciente = prontuarioController.buscarPorCodigo(codigo);
 
-        if (paciente == null) {
+        if (paciente == null) { //Se não encontrou o paciente, retorna erro
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
+          //Exporta os dados do paciente para um arquivo
         Arquivo arquivo = new Arquivo(prontuarioController);
         String nomeArquivo = "C:/Users/Letic/OneDrive/Documentos/paciente_" + codigo + ".txt";
 
         boolean sucesso = arquivo.exportarParaTxtPaciente(paciente, nomeArquivo);
 
-        if (!sucesso) {
+        if (!sucesso) { //Se não conseguiu gerar o arquivo, retorna erro 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
+         
+         //Baixar um arquivo .txt com os dados do paciente. Lê o arquivo e envia como resposta ao navegador, ativando o download
         try {
             File file = new File(nomeArquivo);
-            response.setContentType("text/plain");
+            response.setContentType("text/plain"); //Define que o tipo do conteúdo é texto (.txt) e que será baixado
             response.setHeader("Content-Disposition", "attachment; filename=" + nomeArquivo);
             response.setContentLength((int) file.length());
 
-            InputStream is = new FileInputStream(file);
+            InputStream is = new FileInputStream(file); //Lê o arquivo e envia seu conteúdo
             StreamUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
             is.close();
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
+            return ResponseEntity.ok().build(); // Retorna sucesso
+        } catch (IOException e) { //Retorna falha
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
