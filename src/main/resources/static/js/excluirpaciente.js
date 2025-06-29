@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) { // Se deu certo, remove o paciente do armazenamento local
           localStorage.removeItem("pacienteSelecionado");
           window.location.href = "../html/excluirmensagem.html";  // Redireciona para a página que mostra mensagem de exclusão feita
-        } else { // Se houve erro ao excluir, exibe uma mensagem de alerta para o usuário
+        } else { // Se houve erro ao excluir, exibe uma mensagem de erro 
           alert("Erro ao excluir paciente."); 
         }
       })
