@@ -6,14 +6,14 @@
 
 Antes de rodar este projeto, certifique-se de que você tem instalado:
 
-- Java JDK 21 (versão 21 do Java)
+- **Java JDK 21 (versão 21 do Java)**
     -  Verifique a instalação (no prompt de comando) com:
 
     ```
     java --version
     ```
 
-- IDE com suporte a Java - Para rodar no VScode, certifique-se de ter baixado as seguintes extensões:
+- **IDE com suporte a Java - Para rodar no VScode, certifique-se de ter baixado as seguintes extensões:**
     - Debugger for Java
     - Extension Pack for Java
     - Gradle for Java
@@ -23,7 +23,7 @@ Antes de rodar este projeto, certifique-se de que você tem instalado:
     - Test Runner for Java
     - Live Server
 
-### 🛠️ Passos para rodar o front + back (no VScode)
+### 🛠️ Passos para rodar a aplicação (no VScode)
 **1. Abra o terminal e rode o comando:**
 ```
 ./mvnw spring-boot:run
@@ -35,13 +35,25 @@ http://localhost:8080/api
 ```
 Se aparecer uma lista vazia ( [] ) ou com pacientes, está funcionando!
 
-**3. No diretório principal, percorra as pastas src -> main -> resources -> static -> html e abra menu.html com o Live Server**
+**3. No diretório principal, percorra as pastas:**
 
-**4. Quando quiser parar a aplicação, digite ```ctrl+c``` no terminal**
+```
+ src -> main -> resources -> static -> html 
+ ```
+ Abra o arquivo ```menu.html``` com o Live Server
 
-### 🛠️ Passos para rodar apenas o back (no VScode)
+**4. Para encerrar a aplicação, digite ```ctrl+c``` no terminal**
 
-1. No diretório principal, percorra as pastas src -> main -> java\com\integracao\prontuarioeletronico -> br\com\prontuario\eletronico -> Main.java
+### 📂 Configuração de persistência (opcional)
 
-2. No canto superior direito, selecione a opção "Run Java" para a aplicação rodar no terminal
+Para garantir que os dados dos pacientes e o código de registro sejam salvos corretamente mesmo após o encerramento da aplicação, é necessário modificar os caminhos de persistência em ```Arquivo.java```.
+
+📝 **Caminhos a serem atualizados**
+
+Abra ```Arquivo.java``` e substitua as linhas abaixo pelo caminho especificado até ```arquivos/pacientes.txt``` e ```arquivos/codigo.txt``` no seu diretório local:
+
+```
+private String pathPacientes = "C:/Users/Letic/Downloads/prontuario-eletronico-java/arquivos/pacientes.txt";
+private String pathCodigo = "C:/Users/Letic/Downloads/prontuario-eletronico-java/arquivos/codigo.txt";
+```
 
