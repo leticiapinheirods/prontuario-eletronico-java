@@ -15,15 +15,15 @@ public class ProntuarioController {
         this.arquivo = new Arquivo(this);
         this.arquivo.carregarDados();
     }
-     // Cadastra um novo paciente no sistema
+     // Cadastra um novo paciente no sistema, atribui código automático, adiciona na lista e no HashMap, e salva no arquivo
     public void cadastrarPaciente(Paciente p) {
         int codigo = Paciente.getProximoCodigo(); // Gera código automaticamente 
         p.setCodigo(codigo);
         Paciente.incrementarCodigo();
-        // Armazena o paciente no HashMap e na lista
+       
         pacientesPorCodigo.put(codigo, p);
         listaDePacientes.add(p);
-        arquivo.salvarDados();
+        arquivo.salvarDados();// Salva os dados em arquivo
     }
 
     //Busca paciente por código.
@@ -49,7 +49,7 @@ public class ProntuarioController {
     public void atualizarPaciente(int codigo, Paciente atualizado){   
         pacientesPorCodigo.put(codigo, atualizado); //Atualiza no HashMap.
 
-        //Percorre a lista para substituir.
+        //Percorre a lista para substituir o paciente atualizado.
         for(int i = 0; i < listaDePacientes.size(); i++){
             if(listaDePacientes.get(i).getCodigo() == codigo){
                 listaDePacientes.set(i, atualizado);
@@ -57,7 +57,7 @@ public class ProntuarioController {
             }
         }
 
-        arquivo.salvarDados();
+        arquivo.salvarDados();// Salva os dados atualizados
     }
       //Exclui um paciente do sistema, removendo dos dois armazenamentos HashMap e lista.
     public void ExcluirPaciente(int codigo){
@@ -70,7 +70,7 @@ public class ProntuarioController {
     public ArrayList getArrayList(){
         return listaDePacientes;
     }
-
+       //Atualiza a lista de pacientes 
     public void setArrayList(ArrayList<Paciente> lista) {
         this.listaDePacientes = lista;
     }
@@ -79,7 +79,7 @@ public class ProntuarioController {
     public HashMap getHashMap(){
         return pacientesPorCodigo;
     }
-
+    // Atualiza o HasMap de pacientes 
     public void setHashMap(HashMap<Integer, Paciente> mapa) {
         this.pacientesPorCodigo = mapa;
     }
