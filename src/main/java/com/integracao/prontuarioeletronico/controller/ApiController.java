@@ -95,7 +95,7 @@ public class ApiController { //Controlador REST com endpoints da API
         prontuarioController.ExcluirPaciente(codigo);
         return ResponseEntity.ok("Paciente excluído com sucesso!");
     }
-         //Gera um relatório de todos os pacientes
+         //Gera um relatório de todos os pacientes no HTML
     @GetMapping("/relatorio")
     public ResponseEntity<String> gerarRelatorio() {
         List<Paciente> pacientes = prontuarioController.getArrayList();
@@ -114,7 +114,7 @@ public class ApiController { //Controlador REST com endpoints da API
             .append("<th>Diagnóstico</th>")
             .append("</tr>");
 
-        for (Paciente p : pacientes) {
+        for (Paciente p : pacientes) { //Preenche a tabela com os dados dos pacientes
             sb.append("<tr>")
                 .append("<td>").append(p.getCodigo()).append("</td>")
                 .append("<td>").append(p.getNome()).append("</td>")
@@ -126,8 +126,8 @@ public class ApiController { //Controlador REST com endpoints da API
 
         sb.append("</table>");
         sb.append("</body></html>");
-
-        return ResponseEntity.ok()
+        //Gera e retorna o relatório HTML com todos os pacientes em forma de tabela.
+        return ResponseEntity.ok() 
                 .header("Content-Type", "text/html; charset=UTF-8") // Aqui força a codificação UTF-8
                 .body(sb.toString());
     }
