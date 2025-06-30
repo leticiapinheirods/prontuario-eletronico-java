@@ -13,7 +13,6 @@ public class Paciente implements Serializable {
     
     //Método que cria um paciente com seus dados e gera código automático.
     public Paciente(String nome, int idade, String cpf, String diagnostico){
-        this.codigo = proximoCodigo++; 
         this.nome = nome;
         this.idade = idade;
         this.cpf = cpf;
@@ -39,6 +38,12 @@ public class Paciente implements Serializable {
     public static int getProximoCodigo() {
         return proximoCodigo;
     }
+
+    // Salva o próximo código para persistência
+    public static void setProximoCodigo(int codigo) {
+        proximoCodigo = codigo;
+    }
+
       // Incrementa o valor do próximo código
     public static void incrementarCodigo() {
         proximoCodigo++;

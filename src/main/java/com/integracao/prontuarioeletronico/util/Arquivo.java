@@ -1,52 +1,63 @@
 package com.integracao.prontuarioeletronico.util;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.integracao.prontuarioeletronico.controller.ProntuarioController;
 import com.integracao.prontuarioeletronico.model.Paciente;
 
 //Classe reponsável por salvar e carregar os dados do sistema em arquivos.
 public class Arquivo {
-    private String path = "/C:/Users/Letic/OneDrive/Documentos/NetBeansProjects/prontuario-eletronico/arquivos/arquivo.txt"; 
+    private String pathPacientes = "C:/Users/Letic/Downloads/prontuario-eletronico-java/arquivos/pacientes.txt";
+    private String pathCodigo = "C:/Users/Letic/Downloads/prontuario-eletronico-java/arquivos/codigo.txt";
     private ProntuarioController controller; 
     
     public Arquivo(ProntuarioController controller){ //Cria o gerenciador de arquivos e recebe o controlador do sistema.
         this.controller = controller; 
     }
-    //Salva um paciente em arquivo binário e textuais.
-    //Retorna true se salvar com sucesso, false se ocorrer erro.
-    public boolean salvarArquivoPaciente(Paciente p){
-        try{
-            FileOutputStream arquivoPaciente = new FileOutputStream(path);
-            ObjectOutputStream objGravar = new ObjectOutputStream(arquivoPaciente);
-            objGravar.writeObject(p); // Salva o objeto paciente no arquivo.
-            objGravar.flush();// Garante que todos os dados sejam gravados.
-            objGravar.close();//Fecha os recursos.
-            arquivoPaciente.flush();
-            arquivoPaciente.close();
-            
-            return true;
-        }catch(Exception e){
+    
+    public void salvarDados() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(pathPacientes))) {
+            out.writeObject(controller.getHashMap());
+            out.writeObject(controller.getArrayList());
+        } catch (IOException e) {
             e.printStackTrace();
-            return false;
-        }  
-    }
-     //Carrega e exibe um paciente individual salvo em arquivo binário.
-    public void carregarArquivoPaciente(){
-        try{
-            FileInputStream arquivoLeitura = new FileInputStream(path);
-            ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura);
-            System.out.println(objLeitura.readObject());
-            objLeitura.close();
-            arquivoLeitura.close();
-        }catch(Exception e){
+        }
+
+        try (DataOutputStream outCodigo = new DataOutputStream(new FileOutputStream(pathCodigo))) {
+            outCodigo.writeInt(Paciente.getProximoCodigo());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    // Carrega os dados dos pacientes e o próximo código
+    public void carregarDados() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(pathPacientes))) {
+            HashMap<Integer, Paciente> mapa = (HashMap<Integer, Paciente>) in.readObject();
+            ArrayList<Paciente> lista = (ArrayList<Paciente>) in.readObject();
+
+            controller.setHashMap(mapa);
+            controller.setArrayList(lista);
+        } catch (Exception e) {
+            // Primeira execução, arquivos ainda não existem
+        }
+
+        try (DataInputStream inCodigo = new DataInputStream(new FileInputStream(pathCodigo))) {
+            int codigo = inCodigo.readInt();
+            Paciente.setProximoCodigo(codigo);
+        } catch (Exception e) {
+            Paciente.setProximoCodigo(1); // Primeira execução
+        }
+    }
+
     //Exporta os dados de um paciente individual para um arquivo de texto.
     public boolean exportarParaTxtPaciente(Paciente p, String nomeArquivo){
         try{
@@ -64,43 +75,7 @@ public class Arquivo {
             return false; 
         }
     }
-     //Salva toda a lista de pacientes em um arquivo binário.
-    public boolean salvarArquivoPacientes(){
-        try{
-            FileOutputStream arquivoPacientes = new FileOutputStream(path);
-            ObjectOutputStream objGravar = new ObjectOutputStream(arquivoPacientes);
-            
-            objGravar.writeObject(controller.getArrayList());
-            objGravar.flush();
-            objGravar.close();
-            
-            arquivoPacientes.flush();
-            arquivoPacientes.close();
-            
-            return true;
-        }catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }  
-    }
-     //Carrega e exibe todos os pacientes salvos no arquivo binário.
-    public void carregarArquivoPacientes(){
-        try{
-            FileInputStream arquivoLeitura = new FileInputStream(path);
-            ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura);
-            
-            ArrayList<Paciente> pacientesLidos = (ArrayList<Paciente>) objLeitura.readObject();
-            for (Paciente p : pacientesLidos) {
-                System.out.println(p);
-            }
-
-            
-            objLeitura.close();
-            arquivoLeitura.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+    
       // Exporta todos os pacientes para um arquivo de texto no formato de tabela.
     public boolean exportarParaTxtPacientes(){
         

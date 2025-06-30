@@ -13,18 +13,18 @@ public class ProntuarioController {
     //Construtor que inicializa o objeto para ler e salvar arquivos.
     public ProntuarioController(){
         this.arquivo = new Arquivo(this);
+        this.arquivo.carregarDados();
     }
      // Cadastra um novo paciente no sistema
     public void cadastrarPaciente(Paciente p) {
-        
         int codigo = Paciente.getProximoCodigo(); // Gera código automaticamente 
         p.setCodigo(codigo);
         Paciente.incrementarCodigo();
         // Armazena o paciente no HashMap e na lista
         pacientesPorCodigo.put(codigo, p);
         listaDePacientes.add(p);
+        arquivo.salvarDados();
     }
-
 
     //Busca paciente por código.
     public Paciente buscarPorCodigo(int codigo){
@@ -56,25 +56,31 @@ public class ProntuarioController {
                 break; //Para o laço após encontrar.
             }
         }
+
+        arquivo.salvarDados();
     }
       //Exclui um paciente do sistema, removendo dos dois armazenamentos HashMap e lista.
     public void ExcluirPaciente(int codigo){
         pacientesPorCodigo.remove(codigo);
         listaDePacientes.removeIf(p -> p.getCodigo() == codigo);
+        arquivo.salvarDados();
     }
-     //Gera relatório completo do paciente.
-    public void relatorioPacientes(){
-        System.out.println("ID    | Nome                 | Idade | CPF          | Diagnóstico");
-        System.out.println("---------------------------------------------------------------");
-        arquivo.salvarArquivoPacientes();
-        arquivo.carregarArquivoPacientes();
-    }
+    
     //Retorna a lista de pacientes.
     public ArrayList getArrayList(){
         return listaDePacientes;
     }
+
+    public void setArrayList(ArrayList<Paciente> lista) {
+        this.listaDePacientes = lista;
+    }
+
      //Retorna pacientes por código.
     public HashMap getHashMap(){
         return pacientesPorCodigo;
+    }
+
+    public void setHashMap(HashMap<Integer, Paciente> mapa) {
+        this.pacientesPorCodigo = mapa;
     }
 }

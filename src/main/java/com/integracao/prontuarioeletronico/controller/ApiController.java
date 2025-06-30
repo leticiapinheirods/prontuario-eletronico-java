@@ -101,14 +101,35 @@ public class ApiController { //Controlador REST com endpoints da API
         List<Paciente> pacientes = prontuarioController.getArrayList();
         StringBuilder sb = new StringBuilder();
 
-        sb.append("ID    | Nome                 | Idade | CPF           | Diagnóstico\n");
-        sb.append("---------------------------------------------------------------\n");
-        for (Paciente p : pacientes) { 
-            sb.append(String.format("%-5d | %-20s | %-5d | %-13s | %s\n",
-                    p.getCodigo(), p.getNome(), p.getIdade(), p.getCpf(), p.getDiagnostico()));
+        sb.append("<html><head>");
+        sb.append("<meta charset=\"UTF-8\">"); // Garante UTF-8 no HTML
+        sb.append("</head><body>");
+        sb.append("<h2>Relatório de Pacientes</h2>");
+        sb.append("<table border='1' cellpadding='5' cellspacing='0'>");
+        sb.append("<tr>")
+            .append("<th>ID</th>")
+            .append("<th>Nome</th>")
+            .append("<th>Idade</th>")
+            .append("<th>CPF</th>")
+            .append("<th>Diagnóstico</th>")
+            .append("</tr>");
+
+        for (Paciente p : pacientes) {
+            sb.append("<tr>")
+                .append("<td>").append(p.getCodigo()).append("</td>")
+                .append("<td>").append(p.getNome()).append("</td>")
+                .append("<td>").append(p.getIdade()).append("</td>")
+                .append("<td>").append(p.getCpf()).append("</td>")
+                .append("<td>").append(p.getDiagnostico()).append("</td>")
+                .append("</tr>");
         }
-             // Envia o conteúdo do relatório como resposta da requisição
-        return ResponseEntity.ok(sb.toString());
+
+        sb.append("</table>");
+        sb.append("</body></html>");
+
+        return ResponseEntity.ok()
+                .header("Content-Type", "text/html; charset=UTF-8") // Aqui força a codificação UTF-8
+                .body(sb.toString());
     }
         //Gera um arquivo .txt com os dados do paciente e envia como download
    @GetMapping("/baixar/{codigo}")
@@ -120,7 +141,7 @@ public class ApiController { //Controlador REST com endpoints da API
         }
           //Exporta os dados do paciente para um arquivo
         Arquivo arquivo = new Arquivo(prontuarioController);
-        String nomeArquivo = "C:/Users/Letic/OneDrive/Documentos/paciente_" + codigo + ".txt";
+        String nomeArquivo = "paciente_" + codigo + ".txt";
 
         boolean sucesso = arquivo.exportarParaTxtPaciente(paciente, nomeArquivo);
 
