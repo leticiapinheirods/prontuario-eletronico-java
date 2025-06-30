@@ -22,17 +22,17 @@ public class Arquivo {
     public Arquivo(ProntuarioController controller){ //Cria o gerenciador de arquivos e recebe o controlador do sistema.
         this.controller = controller; 
     }
-    
+     // Salva os dados dos pacientes e o próximo código em arquivos
     public void salvarDados() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(pathPacientes))) {
-            out.writeObject(controller.getHashMap());
-            out.writeObject(controller.getArrayList());
+            out.writeObject(controller.getHashMap());// Salva o HashMap (pacientes por código)
+            out.writeObject(controller.getArrayList());// Salva a lista de pacientes
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try (DataOutputStream outCodigo = new DataOutputStream(new FileOutputStream(pathCodigo))) {
-            outCodigo.writeInt(Paciente.getProximoCodigo());
+            outCodigo.writeInt(Paciente.getProximoCodigo());// Salva o próximo código disponível
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class Arquivo {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(pathPacientes))) {
             HashMap<Integer, Paciente> mapa = (HashMap<Integer, Paciente>) in.readObject();
             ArrayList<Paciente> lista = (ArrayList<Paciente>) in.readObject();
-
+            //Atualiza no controlador
             controller.setHashMap(mapa);
             controller.setArrayList(lista);
         } catch (Exception e) {
